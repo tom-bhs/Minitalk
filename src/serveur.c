@@ -6,13 +6,14 @@
 /*   By: tbihoues <tbihoues@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 17:38:11 by tbihoues          #+#    #+#             */
-/*   Updated: 2024/02/21 17:53:00 by tbihoues         ###   ########.fr       */
+/*   Updated: 2024/02/22 18:31:24 by tbihoues         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "../minitalk.h"
 
-void	receive_request()
-{
-	
-}
+//mon serveur
+// void	sigusr2(int sig __attribute__((unused)))
+// {
+// 	write(1, "SIGUSR2 recu\n", 13);
+// }
