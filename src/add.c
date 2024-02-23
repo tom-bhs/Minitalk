@@ -1,27 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   add.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tbihoues <tbihoues@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/21 18:12:20 by tbihoues          #+#    #+#             */
-/*   Updated: 2024/02/23 18:55:20 by tbihoues         ###   ########.fr       */
+/*   Created: 2024/02/23 15:19:24 by tbihoues          #+#    #+#             */
+/*   Updated: 2024/02/23 15:22:18 by tbihoues         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_H
-# define MINITALK_H
+#include "../minitalk.h"
 
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <signal.h>
-#include <sys/types.h>
+int	ft_strlen(char *str)
+{
+	int	n;
 
-//int		main(int argc, char *argv[]);
-void	handle_signal(int signal);
-void	verif_bit(int bit, int pid);
-void	send_char(int pid, char c);
+	n = 0;
+	while (str[n])
+		n++;
+	return (n);
+}
 
-#endif
+void	ft_putstr(char *str)
+{
+	write(1, str, ft_strlen(str));
+}

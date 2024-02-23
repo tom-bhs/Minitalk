@@ -6,7 +6,7 @@
 /*   By: tbihoues <tbihoues@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 17:37:26 by tbihoues          #+#    #+#             */
-/*   Updated: 2024/02/22 19:34:56 by tbihoues         ###   ########.fr       */
+/*   Updated: 2024/02/23 18:45:42 by tbihoues         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,44 +18,48 @@
 #include <signal.h>
 #include <sys/types.h>
 
-void	handle_signal(int signal __attribute__((unused)))
-{
-	printf("Signal %d recu\n", signal);
-}
 
-void	send_char_signal(pid_t pid)
+void	verif_bit(int bit, int pid)
 {
-	if (kill(pid, SIGUSR1) == -1)
+	if (bit == 0)
 	{
-		perror("Erreur d'envoie de SIGUSR1");
-		exit(EXIT_FAILURE);
+		kill(pid, SIGUSR1);
+		printf("ok\n");
+	}
+	else
+	{
+		kill(pid, SIGUSR2);
+		printf("no\n");
 	}
 }
 
-//mon serveur
-void	sigusr2(int sig __attribute__((unused)))
+void	send_char(int pid, char c)
 {
-	write(1, "SIGUSR2 recu\n", 13);
-		write(1, "2\n", 2);
+	for (int i = 7; i >= 0; --i)
+		{
+			int bit = (c >> i) &1;
+			verif_bit(bit, pid);
+			sleep(2);
+		}
 }
 
-// void	send_string(pid_t pid, const char* message) 
-// {
-//     while (*message)
-// 	{
-//         send_char_signal(pid);
-//         usleep(100000);
-// 	}
-// }
 
-
-int main()
+int		main(int argc, char *argv[])
 {
-	signal(SIGUSR1, handle_signal);
-	signal(SIGUSR2, handle_signal);
+	if(argc != 3)
+	{
+		fprintf(stderr, "Il faut : %s <PID> <Message>\n", argv[0]);
+		return (1);
+	}
 
-	printf("Serveur PID: %d\n", getpid());
-	while (1)
-		pause();
+	int pid = atoi(argv[1]);
+	const char *message = argv[2];
+
+
+	while (*message)
+	{
+		send_char(pid, *message);
+		message++;
+	}
 	return (0);
 }
