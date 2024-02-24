@@ -6,7 +6,7 @@
 /*   By: tbihoues <tbihoues@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 17:37:26 by tbihoues          #+#    #+#             */
-/*   Updated: 2024/02/24 19:28:22 by tbihoues         ###   ########.fr       */
+/*   Updated: 2024/02/24 19:31:29 by tbihoues         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	send_char(int pid, char c)
 		{
 			int bit = (c >> i) &1;
 			verif_bit(bit, pid);
-			sleep(2);
+			sleep(5);
 		}
 }
 
