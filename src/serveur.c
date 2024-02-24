@@ -6,7 +6,7 @@
 /*   By: tbihoues <tbihoues@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 17:38:11 by tbihoues          #+#    #+#             */
-/*   Updated: 2024/02/23 18:59:06 by tbihoues         ###   ########.fr       */
+/*   Updated: 2024/02/24 19:26:05 by tbihoues         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,6 @@
 void	handle_signal(int signal)
 {
 	printf("Signal %d recu\n", signal);
-}
-
-
-void	send_char(int pid, char c)
-{
-	for (int i = 7; i >= 0; --i)
-		{
-			int bit = (c >> i) &1;
-			verif_bit(bit, pid);
-			sleep(2);
-		}
 }
 
 
@@ -40,8 +29,8 @@ int main(void)
 	{
 		// handle_signal(signal);
 		// send_char;
-		// pause();
 		printf("SAAA\n");
+		pause();
 	}
 	return (0);
 }

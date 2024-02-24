@@ -4,8 +4,8 @@ CC = gcc
 RM = rm -rf
 CFLAGS = -Wall -Wextra -Werror
 
-CLIENT_SRCS = src/client.c
-SERVER_SRCS = src/serveur.c
+CLIENT_SRCS = src/add.c src/client.c
+SERVER_SRCS = src/add.c src/serveur.c
 
 CLIENT_OBJS = $(CLIENT_SRCS:.c=.o)
 SERVER_OBJS = $(SERVER_SRCS:.c=.o)
@@ -31,4 +31,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all client serveur clean fclean re
+#.PHONY: all client serveur clean fclean re
