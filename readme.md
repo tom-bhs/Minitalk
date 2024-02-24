@@ -10,3 +10,6 @@ getpid() = pour obtenir le pid
 pause() = sert a attendre le prochian signal 
 
 kill <PID> = tuer le proces
+
+
+il faut que je gere si cest pas le bon pid
