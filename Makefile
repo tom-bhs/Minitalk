@@ -5,30 +5,36 @@ RM = rm -rf
 CFLAGS = -Wall -Wextra -Werror
 
 CLIENT_SRCS = src/add.c src/client.c
-SERVER_SRCS = src/add.c src/serveur.c
+SERVER_SRCS = src/add.c src/server.c
 
 CLIENT_OBJS = $(CLIENT_SRCS:.c=.o)
 SERVER_OBJS = $(SERVER_SRCS:.c=.o)
 
+LIBFTPRINTF = ft_printf/libftprintf.a
+
 all: $(NAME)
 
+$(LIBFTPRINTF):
+	make -C ft_printf/
+
 %.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -I ft_printf -c $< -o $@
 
-$(NAME): client serveur
+$(NAME): client server
 
-client: $(CLIENT_OBJS)
-	$(CC) $(CLIENT_OBJS) -o client
+client: $(LIBFTPRINTF) $(CLIENT_OBJS)
+	$(CC) $(CLIENT_OBJS) $(LIBFTPRINTF) -o client
 
-serveur: $(SERVER_OBJS)
-	$(CC) $(SERVER_OBJS) -o serveur
+server: $(LIBFTPRINTF) $(SERVER_OBJS)
+	$(CC) $(SERVER_OBJS) $(LIBFTPRINTF) -o server
 
 clean:
 	$(RM) $(CLIENT_OBJS) $(SERVER_OBJS)
+	make clean -C ft_printf/
 
 fclean: clean
-	$(RM) client serveur
+	$(RM) client server
 
 re: fclean all
 
-#.PHONY: all client serveur clean fclean re
+.PHONY: all client server clean fclean re

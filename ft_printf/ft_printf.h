@@ -1,35 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   serveur.c                                          :+:      :+:    :+:   */
+/*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tbihoues <tbihoues@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/21 17:38:11 by tbihoues          #+#    #+#             */
-/*   Updated: 2024/02/24 19:51:32 by tbihoues         ###   ########.fr       */
+/*   Created: 2023/11/02 01:24:30 by tom               #+#    #+#             */
+/*   Updated: 2023/11/21 19:38:57 by tbihoues         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minitalk.h"
+#ifndef FT_PRINTF_H
+# define FT_PRINTF_H
+# include <limits.h>
+# include <stdarg.h>
+# include <stdbool.h>
+# include <unistd.h>
 
-void	handle_signal(int signal)
-{
-	printf("Signal %d recu\n", signal);
-}
+int	ft_putchar(int c);
+int	ft_putstr(char *str);
+int	ft_putnbr(int n);
+int	ft_putnbr_un(unsigned int n);
+int	ft_nbrbase(unsigned long nbr, char *base, bool ptr);
+int	ft_format(va_list args, const char format);
+int	ft_printf(const char *format, ...);
 
-
-int main(void)
-{
-	signal(SIGUSR1, handle_signal);
-	signal(SIGUSR2, handle_signal);
-
-	printf("Serveur PID: %d\n", getpid());
-	while (1)
-	{
-		// handle_signal(signal);
-		// send_char;
-		// printf("SAAA\n");
-		pause();
-	}
-	return (0);
-}
+#endif

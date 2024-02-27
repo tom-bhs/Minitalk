@@ -12,4 +12,10 @@ pause() = sert a attendre le prochian signal
 kill <PID> = tuer le proces
 
 
-il faut que je gere si cest pas le bon pid
+
+le serveur accuse reception de chaque message recu en envoyant un signal au client 
+
+
+MODIFIER PRINTF PAR MON PROPRE PRINTF
+
+faire une retour a la ligne a chaque fin de messge 

@@ -6,7 +6,7 @@
 /*   By: tbihoues <tbihoues@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 17:37:26 by tbihoues          #+#    #+#             */
-/*   Updated: 2024/02/24 20:25:12 by tbihoues         ###   ########.fr       */
+/*   Updated: 2024/02/27 16:50:17 by tbihoues         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,37 +17,42 @@ void	verif_bit(int bit, int pid)
 	if (bit == 0)
 	{
 		kill(pid, SIGUSR1);
-		printf("bon (1)\n");
+		ft_printf("0");
 	}
 	else
 	{
 		kill(pid, SIGUSR2);
-		printf("pas bon (2)\n");
+		ft_printf("1");
 	}
 }
 
 void	send_char(int pid, char c)
 {
-	for (int i = 7; i >= 0; --i)
-		{
-			int bit = (c >> i) &1;
-			verif_bit(bit, pid);
-			sleep(5);
-		}
+	int	i;
+	int	bit;
+
+	i = 7;
+	while (i >= 0)
+	{
+		bit = (c >> i) & 1;
+		verif_bit(bit, pid);
+		usleep(50000);
+		i--;
+	}
 }
 
-int		main(int argc, char *argv[])
+int	main(int argc, char *argv[])
 {
-	if(argc != 3)
+	int			pid;
+	const char	*message;
+
+	if (argc != 3)
 	{
-		fprintf(stderr, "Il faut : %s <PID> <Message>\n", argv[0]);
+		ft_printf("You need : %s <PID> <Message>\n", argv[0]);
 		return (1);
 	}
-
-	int pid = atoi(argv[1]);
-	const char *message = argv[2];
-
-
+	pid = atoi(argv[1]);
+	message = argv[2];
 	while (*message)
 	{
 		send_char(pid, *message);
