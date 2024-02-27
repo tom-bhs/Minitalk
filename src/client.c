@@ -6,7 +6,7 @@
 /*   By: tbihoues <tbihoues@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 17:37:26 by tbihoues          #+#    #+#             */
-/*   Updated: 2024/02/27 16:50:17 by tbihoues         ###   ########.fr       */
+/*   Updated: 2024/02/27 17:15:58 by tbihoues         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	send_char(int pid, char c)
 	{
 		bit = (c >> i) & 1;
 		verif_bit(bit, pid);
-		usleep(50000);
+		usleep(10000);
 		i--;
 	}
 }
@@ -57,6 +57,8 @@ int	main(int argc, char *argv[])
 	{
 		send_char(pid, *message);
 		message++;
+		if (*message == '\0')
+			send_char(pid, '\n');
 	}
 	return (0);
 }
