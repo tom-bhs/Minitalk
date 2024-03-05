@@ -13,9 +13,4 @@ kill <PID> = tuer le proces
 
 
 
-le serveur accuse reception de chaque message recu en envoyant un signal au client 
-
-
-MODIFIER PRINTF PAR MON PROPRE PRINTF
-
-faire une retour a la ligne a chaque fin de messge 
+faut pas que mon makefile relink
