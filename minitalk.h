@@ -6,7 +6,7 @@
 /*   By: tbihoues <tbihoues@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 18:12:20 by tbihoues          #+#    #+#             */
-/*   Updated: 2024/02/27 16:52:08 by tbihoues         ###   ########.fr       */
+/*   Updated: 2024/04/03 22:33:51 by tbihoues         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 
 # define BIT_COUNT 8
 
-void	handle_signal(int signal);
+void	check_signal(int signal);
 void	verif_bit(int bit, int pid);
 void	send_char(int pid, char c);
 int		ft_printf(const char *format, ...);

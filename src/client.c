@@ -6,7 +6,7 @@
 /*   By: tbihoues <tbihoues@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 17:37:26 by tbihoues          #+#    #+#             */
-/*   Updated: 2024/03/05 12:54:08 by tbihoues         ###   ########.fr       */
+/*   Updated: 2024/04/02 14:11:30 by tbihoues         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,6 @@ void	verif_bit(int bit, int pid)
 		kill(pid, SIGUSR2);
 }
 
-void	confirm(int signal)
-{
-	if (signal == SIGUSR2)
-		ft_printf("Recu!\n");
-}
-
 void	send_char(int pid, char c)
 {
 	int	i;
@@ -36,7 +30,7 @@ void	send_char(int pid, char c)
 	{
 		bit = (c >> i) & 1;
 		verif_bit(bit, pid);
-		usleep(300);
+		usleep(400);
 		i--;
 	}
 }

@@ -4,8 +4,8 @@ CC = gcc
 RM = rm -rf
 CFLAGS = -Wall -Wextra -Werror
 
-CLIENT_SRCS = src/add.c src/client.c
-SERVER_SRCS = src/add.c src/server.c
+CLIENT_SRCS = src/client.c
+SERVER_SRCS = src/server.c
 
 CLIENT_OBJS = $(CLIENT_SRCS:.c=.o)
 SERVER_OBJS = $(SERVER_SRCS:.c=.o)
