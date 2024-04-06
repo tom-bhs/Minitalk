@@ -6,7 +6,7 @@
 /*   By: tbihoues <tbihoues@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 17:38:11 by tbihoues          #+#    #+#             */
-/*   Updated: 2024/04/06 20:10:01 by tbihoues         ###   ########.fr       */
+/*   Updated: 2024/04/06 20:19:55 by tbihoues         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	send_character(int pid, int c)
 			kill(pid, SIGUSR1);
 		usleep(100);
 		if (bit == 1)
-			break ;
+			return ;
 		bit = (bit >> 1);
 	}
 }
