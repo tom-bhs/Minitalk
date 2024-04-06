@@ -6,7 +6,7 @@
 /*   By: tbihoues <tbihoues@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 17:37:26 by tbihoues          #+#    #+#             */
-/*   Updated: 2024/04/06 20:17:38 by tbihoues         ###   ########.fr       */
+/*   Updated: 2024/04/06 23:09:31 by tbihoues         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ft_handler(int signal)
 	bit = bit >> 1;
 	if (bit == 0)
 	{
-		printf("%c", i);
+		ft_printf("%s", i); // printf %s
 		bit = 0;
 		i = 0;
 	}
