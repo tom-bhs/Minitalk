@@ -1,40 +1,49 @@
 NAME = minitalk
 
-CC = gcc
-RM = rm -rf
-CFLAGS = -Wall -Wextra -Werror
+FT_PRINTF_PATH = ft_printf
+FT_PRINTF = $(FT_PRINTF_PATH)/libftprintf.a
+INCLUDES = -I ./includes -I $(FT_PRINTF_PATH)
+CFLAGS = -Wall -Wextra -Werror $(INCLUDES)
 
-CLIENT_SRCS = src/client.c
-SERVER_SRCS = src/server.c
+SERVER_SRCS = srcs/server.c
+CLIENT_SRCS = srcs/client.c
 
-CLIENT_OBJS = $(CLIENT_SRCS:.c=.o)
 SERVER_OBJS = $(SERVER_SRCS:.c=.o)
+CLIENT_OBJS = $(CLIENT_SRCS:.c=.o)
 
-LIBFTPRINTF = ft_printf/libftprintf.a
+SERVER = server
+CLIENT = client
+
+RM = rm -f
 
 all: $(NAME)
 
-$(LIBFTPRINTF):
-	make -C ft_printf/
+$(NAME): $(SERVER) $(CLIENT)
 
-%.o: %.c
-	$(CC) $(CFLAGS) -I ft_printf -c $< -o $@
+$(SERVER): $(SERVER_OBJS) $(FT_PRINTF)
+	$(CC) $< -o $@ -L$(FT_PRINTF_PATH) -lftprintf
 
-$(NAME): client server
+$(CLIENT): $(CLIENT_OBJS) $(FT_PRINTF)
+	$(CC) $< -o $@ -L$(FT_PRINTF_PATH) -lftprintf
 
-client: $(LIBFTPRINTF) $(CLIENT_OBJS)
-	$(CC) $(CLIENT_OBJS) $(LIBFTPRINTF) -o client
+$(SERVER_OBJS): $(SERVER_SRCS)
+	$(CC) -c $(SERVER_SRCS) -o $@
 
-server: $(LIBFTPRINTF) $(SERVER_OBJS)
-	$(CC) $(SERVER_OBJS) $(LIBFTPRINTF) -o server
+$(CLIENT_OBJS): $(CLIENT_SRCS)
+	$(CC) -c $(CLIENT_SRCS) -o $@
 
 clean:
-	$(RM) $(CLIENT_OBJS) $(SERVER_OBJS)
-	make clean -C ft_printf/
+	$(RM) $(SERVER_OBJS) $(CLIENT_OBJS)
+	$(MAKE) clean -C $(FT_PRINTF_PATH)
 
-fclean: clean
-	$(RM) client server
+fclean:
+	$(RM) $(SERVER_OBJS) $(CLIENT_OBJS)
+	$(RM) $(SERVER) $(CLIENT)
+	$(MAKE) fclean -C $(FT_PRINTF_PATH)
 
 re: fclean all
+
+$(FT_PRINTF):
+	$(MAKE) -C $(FT_PRINTF_PATH)
 
 .PHONY: all clean fclean re

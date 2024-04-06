@@ -5,39 +5,40 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: tbihoues <tbihoues@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/21 17:38:11 by tbihoues          #+#    #+#             */
-/*   Updated: 2024/04/03 22:26:46 by tbihoues         ###   ########.fr       */
+/*   Created: 2024/02/21 17:37:26 by tbihoues          #+#    #+#             */
+/*   Updated: 2024/04/05 22:08:23 by tbihoues         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minitalk.h"
+#include "../includes/minitalk.h"
 
-void	check_signal(int signal)
+void	ft_handler(int signal)
 {
-	static int		bits = 0;
-	static char		character = 0;
+	static int	bit;
+	static int	i;
 
-	if (signal == SIGUSR1)
-		character <<= 1;
-	else if (signal == SIGUSR2)
-		character = (character << 1) | 1;
-	bits++;
-	if (bits == BIT_COUNT)
-	{
-		ft_printf(&character, 1);
-		bits = 0;
-		character = 0;
+	if (bit == 0)
+		bit = 0b10000000;
+	if (signal == SIGUSR2)
+		i += bit;
+	bit = bit >> 1;
+	if (bit == 0)
+	{	
+		printf("%c", i);
+		bit = 0;
+		i = 0;
 	}
 }
 
 int	main(void)
 {
-	signal(SIGUSR1, check_signal);
-	signal(SIGUSR2, check_signal);
-	ft_printf("Server PID: %d\n", getpid());
+	int	pid;
+
+	pid = getpid();
+	ft_printf ("Server PID: %d\n", getpid ());
+	signal(SIGUSR1, ft_handler);
+	signal(SIGUSR2, ft_handler);
 	while (1)
-	{
 		pause();
-	}
 	return (0);
 }

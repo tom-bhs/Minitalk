@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: tbihoues <tbihoues@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/21 18:12:20 by tbihoues          #+#    #+#             */
-/*   Updated: 2024/04/03 22:33:51 by tbihoues         ###   ########.fr       */
+/*   Created: 2024/03/02 16:38:31 by tbihoues          #+#    #+#             */
+/*   Updated: 2024/04/05 22:04:43 by tbihoues         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,18 @@
 
 # include "../ft_printf/ft_printf.h"
 # include <unistd.h>
-# include <stdio.h>
-# include <stdlib.h>
 # include <signal.h>
-# include <sys/types.h>
+# include <unistd.h>
+# include <stdlib.h>
+# include <stdio.h>
 
-# define BIT_COUNT 8
+# define FIRST 0b10000000
+# define LAST 0b00000001
 
-void	check_signal(int signal);
-void	verif_bit(int bit, int pid);
-void	send_char(int pid, char c);
-int		ft_printf(const char *format, ...);
+void	ft_putchar_fd(char c, int fd);
+int		ft_atoi(const char *nptr);
+void	ft_putnbr_fd(int n, int fd);
+void	ft_putstr_fd(char *s, int fd);
+size_t	ft_strlen(const char *s);
 
 #endif
