@@ -6,7 +6,7 @@
 /*   By: tbihoues <tbihoues@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 16:38:31 by tbihoues          #+#    #+#             */
-/*   Updated: 2024/04/05 22:04:43 by tbihoues         ###   ########.fr       */
+/*   Updated: 2024/04/06 20:09:54 by tbihoues         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@
 # include <stdlib.h>
 # include <stdio.h>
 
-# define FIRST 0b10000000
-# define LAST 0b00000001
+//# define FIRST 0b10000000
+//# define LAST 0b00000001
 
 void	ft_putchar_fd(char c, int fd);
 int		ft_atoi(const char *nptr);

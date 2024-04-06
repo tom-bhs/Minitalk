@@ -6,7 +6,7 @@
 /*   By: tbihoues <tbihoues@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 17:38:11 by tbihoues          #+#    #+#             */
-/*   Updated: 2024/04/05 22:15:28 by tbihoues         ###   ########.fr       */
+/*   Updated: 2024/04/06 20:10:01 by tbihoues         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	send_character(int pid, int c)
 {
 	int	bit;
 
-	bit = FIRST;
+	bit = 0b10000000;
 	while (1)
 	{
 		if ((c & bit) >= 1)
