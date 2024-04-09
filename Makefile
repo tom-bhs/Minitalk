@@ -21,10 +21,10 @@ all: $(NAME)
 $(NAME): $(SERVER) $(CLIENT)
 
 $(SERVER): $(SERVER_OBJS) $(FT_PRINTF)
-	$(CC) $< -o $@ -L$(FT_PRINTF_PATH) -lftprintf
+	$(CC) $(SERVER_OBJS) -o $@ -L$(FT_PRINTF_PATH) -lftprintf
 
 $(CLIENT): $(CLIENT_OBJS) $(FT_PRINTF)
-	$(CC) $< -o $@ -L$(FT_PRINTF_PATH) -lftprintf
+	$(CC) $(CLIENT_OBJS) -o $@ -L$(FT_PRINTF_PATH) -lftprintf
 
 $(SERVER_OBJS): $(SERVER_SRCS)
 	$(CC) -c $(SERVER_SRCS) -o $@

@@ -6,7 +6,7 @@
 /*   By: tbihoues <tbihoues@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 17:38:11 by tbihoues          #+#    #+#             */
-/*   Updated: 2024/04/06 21:23:29 by tbihoues         ###   ########.fr       */
+/*   Updated: 2024/04/09 17:26:02 by tbihoues         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,48 +36,40 @@ int	ft_atoi(const char *str)
 	return (result * sign);
 }
 
-void	check_arguments(int argc, char *argv[])
+void send_char(int pid, unsigned char c)
+{
+    int bitIndex = 0;
+    while (bitIndex < 8)
+	{
+        int bit = (c >> (7 - bitIndex)) & 1;
+        if (bit) {
+            kill(pid, SIGUSR2);
+        } else {
+            kill(pid, SIGUSR1);
+        }
+        usleep(200);
+        bitIndex++;
+    }
+}
+
+void send_message(int pid, const char *message)
+{
+	while (*message)
+	{
+		send_char(pid, *message++);
+	}
+	send_char(pid, '\0');
+}
+
+int main(int argc, char *argv[])
 {
 	if (argc != 3)
 	{
-		ft_printf("You need : %s <PID> <Message>\n", argv[0]);
-		exit(0);
+		ft_printf("Usage: %s <PID> <Message>\n", argv[0]);
+		return 1;
 	}
-}
-
-void	send_character(int pid, int c)
-{
-	int	bit;
-
-	bit = 0b10000000;
-	while (1)
-	{
-		if ((c & bit) >= 1)
-			kill(pid, SIGUSR2);
-		else
-			kill(pid, SIGUSR1);
-		usleep(50);
-		if (bit == 1)
-			return ;
-		bit = (bit >> 1);
-	}
-}
-
-void	send_message(char *s_pid, char *message)
-{
-	int	pid;
-	int	i;
-
-	i = 0;
-	pid = ft_atoi(s_pid);
-	while (message[i])
-		send_character(pid, message[i++]);
-	send_character(pid, '\n');
-}
-
-int	main(int argc, char **argv)
-{
-	check_arguments(argc, argv);
-	send_message(argv[1], argv[2]);
-	return (0);
+	int pid = atoi(argv[1]);
+	send_message(pid, argv[2]);
+	
+	return 0;
 }

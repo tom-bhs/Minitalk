@@ -6,39 +6,88 @@
 /*   By: tbihoues <tbihoues@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 17:37:26 by tbihoues          #+#    #+#             */
-/*   Updated: 2024/04/06 23:09:31 by tbihoues         ###   ########.fr       */
+/*   Updated: 2024/04/09 18:40:14 by tbihoues         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minitalk.h"
 
-void	ft_handler(int signal)
-{
-	static int	bit;
-	static int	i;
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <signal.h>
+#include <string.h>
 
-	if (bit == 0)
-		bit = 0b10000000;
-	if (signal == SIGUSR2)
-		i += bit;
-	bit = bit >> 1;
-	if (bit == 0)
+char *buffer;
+size_t bufferIndex = 0;
+
+void init_buffer()
+{
+	buffer = malloc(BUFFER_SIZE);
+	if (!buffer)
 	{
-		ft_printf("%s", i); // printf %s
-		bit = 0;
-		i = 0;
+		ft_printf("Erreur d'allocation mémoire\n");
+		exit(EXIT_FAILURE);
 	}
 }
 
-int	main(void)
+void clear_buffer()
 {
-	int	pid;
+	for (size_t i = 0; i < bufferIndex; ++i)
+	{
+		buffer[i] = '\0';
+	}
+	bufferIndex = 0;
+}
 
-	pid = getpid();
-	ft_printf ("Server PID: %d\n", getpid ());
-	signal(SIGUSR1, ft_handler);
-	signal(SIGUSR2, ft_handler);
+void ft_handler(int signum)
+{
+	static int bitsReceived = 0;
+	static unsigned char currentChar = 0;
+
+	if (signum == SIGUSR2)
+	{
+		currentChar |= (1 << (7 - bitsReceived));
+	}
+	bitsReceived++;
+
+	if (bitsReceived == 8)
+	{
+		if (bufferIndex < BUFFER_SIZE - 1)
+		{
+			buffer[bufferIndex++] = currentChar;
+			buffer[bufferIndex] = '\0';
+		}
+		else
+		{
+			ft_printf("Buffer plein. Message tronqué : %s\n", buffer);
+			clear_buffer();
+		}
+		if (currentChar == '\0')
+		{
+			ft_printf("%s\n", buffer);
+			clear_buffer();
+		}
+
+		bitsReceived = 0;
+		currentChar = 0;
+	}
+}
+
+int main(void)
+{
+	struct sigaction sa;
+
+	init_buffer();
+
+	sa.sa_handler = ft_handler;
+	sigemptyset(&sa.sa_mask);
+	sigaction(SIGUSR1, &sa, NULL);
+	sigaction(SIGUSR2, &sa, NULL);
+
+	printf("Server PID: %d\n", getpid());
+
 	while (1)
 		pause();
-	return (0);
+	return 0;
 }
