@@ -6,29 +6,23 @@
 /*   By: tbihoues <tbihoues@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 17:37:26 by tbihoues          #+#    #+#             */
-/*   Updated: 2024/04/10 16:51:02 by tbihoues         ###   ########.fr       */
+/*   Updated: 2024/04/10 23:30:59 by tbihoues         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minitalk.h"
 
-struct Buffer {
-	char *data;
-	size_t index;
-};
-
-struct Buffer buffer;
-
+struct s_Buffer	g_buffer;
 
 void	init_buffer(void)
 {
-	buffer.data = malloc(BUFFER_SIZE);
-	if (!buffer.data)
+	g_buffer.data = malloc(BUFFER_SIZE);
+	if (!g_buffer.data)
 	{
 		ft_printf("Erreur d'allocation mémoire\n");
 		exit(EXIT_FAILURE);
 	}
-	buffer.index = 0;
+	g_buffer.index = 0;
 }
 
 void	clear_buffer(void)
@@ -36,12 +30,12 @@ void	clear_buffer(void)
 	size_t	i;
 
 	i = 0;
-	while (i < buffer.index)
+	while (i < g_buffer.index)
 	{
-		buffer.data[i] = '\0';
+		g_buffer.data[i] = '\0';
 		++i;
 	}
-	buffer.index = 0;
+	g_buffer.index = 0;
 }
 
 void	ft_handler(int signum)
@@ -56,19 +50,14 @@ void	ft_handler(int signum)
 	bitsreceived++;
 	if (bitsreceived == 8)
 	{
-		if (buffer.index < BUFFER_SIZE - 1)
+		if (g_buffer.index < BUFFER_SIZE - 1)
 		{
-			buffer.data[buffer.index++] = currentchar;
-			buffer.data[buffer.index] = '\0';
-		}
-		else
-		{
-			ft_printf("Buffer plein. Message tronqué : %s\n", buffer);
-			clear_buffer();
+			g_buffer.data[g_buffer.index++] = currentchar;
+			g_buffer.data[g_buffer.index] = '\0';
 		}
 		if (currentchar == '\0')
 		{
-			ft_printf("%s\n", buffer);
+			ft_printf("%s\n", g_buffer);
 			clear_buffer();
 		}
 		bitsreceived = 0;
