@@ -6,7 +6,7 @@
 /*   By: tombihoues <tombihoues@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 17:37:26 by tbihoues          #+#    #+#             */
-/*   Updated: 2024/04/10 03:01:53 by tombihoues       ###   ########.fr       */
+/*   Updated: 2024/04/10 14:25:45 by tombihoues       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,11 @@ void init_buffer()
 
 void clear_buffer()
 {
-	for (size_t i = 0; i < bufferIndex; ++i) // une boucle while 
+	size_t i = 0;
+	while (i < bufferIndex)
 	{
 		buffer[i] = '\0';
+		++i;
 	}
 	bufferIndex = 0;
 }
