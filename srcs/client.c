@@ -6,7 +6,7 @@
 /*   By: tbihoues <tbihoues@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 17:38:11 by tbihoues          #+#    #+#             */
-/*   Updated: 2024/04/09 17:26:02 by tbihoues         ###   ########.fr       */
+/*   Updated: 2024/04/10 16:34:34 by tbihoues         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,23 +36,29 @@ int	ft_atoi(const char *str)
 	return (result * sign);
 }
 
-void send_char(int pid, unsigned char c)
+void	send_char(int pid, unsigned char c)
 {
-    int bitIndex = 0;
-    while (bitIndex < 8)
+	int	bit;
+	int	bitindex;
+
+	bitindex = 0;
+	while (bitindex < 8)
 	{
-        int bit = (c >> (7 - bitIndex)) & 1;
-        if (bit) {
-            kill(pid, SIGUSR2);
-        } else {
-            kill(pid, SIGUSR1);
-        }
-        usleep(200);
-        bitIndex++;
-    }
+		bit = (c >> (7 - bitindex)) & 1;
+		if (bit)
+		{
+			kill(pid, SIGUSR2);
+		}
+		else
+		{
+			kill(pid, SIGUSR1);
+		}
+		usleep(200);
+		bitindex++;
+	}
 }
 
-void send_message(int pid, const char *message)
+void	send_message(int pid, const char *message)
 {
 	while (*message)
 	{
@@ -61,15 +67,16 @@ void send_message(int pid, const char *message)
 	send_char(pid, '\0');
 }
 
-int main(int argc, char *argv[])
+int	main(int argc, char *argv[])
 {
+	int	pid;
+
 	if (argc != 3)
 	{
 		ft_printf("Usage: %s <PID> <Message>\n", argv[0]);
-		return 1;
+		return (1);
 	}
-	int pid = atoi(argv[1]);
+	pid = atoi(argv[1]);
 	send_message(pid, argv[2]);
-	
-	return 0;
+	return (0);
 }

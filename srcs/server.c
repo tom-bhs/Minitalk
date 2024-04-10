@@ -3,93 +3,90 @@
 /*                                                        :::      ::::::::   */
 /*   server.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tombihoues <tombihoues@student.42.fr>      +#+  +:+       +#+        */
+/*   By: tbihoues <tbihoues@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 17:37:26 by tbihoues          #+#    #+#             */
-/*   Updated: 2024/04/10 14:25:45 by tombihoues       ###   ########.fr       */
+/*   Updated: 2024/04/10 16:51:02 by tbihoues         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minitalk.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <signal.h>
-#include <string.h>
+struct Buffer {
+	char *data;
+	size_t index;
+};
 
-char *buffer;
-size_t bufferIndex = 0;
+struct Buffer buffer;
 
-void init_buffer()
+
+void	init_buffer(void)
 {
-	buffer = malloc(BUFFER_SIZE);
-	if (!buffer)
+	buffer.data = malloc(BUFFER_SIZE);
+	if (!buffer.data)
 	{
 		ft_printf("Erreur d'allocation mémoire\n");
 		exit(EXIT_FAILURE);
 	}
+	buffer.index = 0;
 }
 
-void clear_buffer()
+void	clear_buffer(void)
 {
-	size_t i = 0;
-	while (i < bufferIndex)
+	size_t	i;
+
+	i = 0;
+	while (i < buffer.index)
 	{
-		buffer[i] = '\0';
+		buffer.data[i] = '\0';
 		++i;
 	}
-	bufferIndex = 0;
+	buffer.index = 0;
 }
 
-void ft_handler(int signum)
+void	ft_handler(int signum)
 {
-	static int bitsReceived = 0;
-	static unsigned char currentChar = 0;
+	static int				bitsreceived = 0;
+	static unsigned char	currentchar = 0;
 
 	if (signum == SIGUSR2)
 	{
-		currentChar |= (1 << (7 - bitsReceived));
+		currentchar |= (1 << (7 - bitsreceived));
 	}
-	bitsReceived++;
-
-	if (bitsReceived == 8)
+	bitsreceived++;
+	if (bitsreceived == 8)
 	{
-		if (bufferIndex < BUFFER_SIZE - 1)
+		if (buffer.index < BUFFER_SIZE - 1)
 		{
-			buffer[bufferIndex++] = currentChar;
-			buffer[bufferIndex] = '\0';
+			buffer.data[buffer.index++] = currentchar;
+			buffer.data[buffer.index] = '\0';
 		}
 		else
 		{
 			ft_printf("Buffer plein. Message tronqué : %s\n", buffer);
 			clear_buffer();
 		}
-		if (currentChar == '\0')
+		if (currentchar == '\0')
 		{
 			ft_printf("%s\n", buffer);
 			clear_buffer();
 		}
-
-		bitsReceived = 0;
-		currentChar = 0;
+		bitsreceived = 0;
+		currentchar = 0;
 	}
 }
 
-int main(void)
+int	main(void)
 {
-	struct sigaction sa;
+	struct sigaction	sa;
 
 	init_buffer();
-
 	sa.sa_handler = ft_handler;
 	sigemptyset(&sa.sa_mask);
 	sigaction(SIGUSR1, &sa, NULL);
 	sigaction(SIGUSR2, &sa, NULL);
-
 	printf("Server PID: %d\n", getpid());
-
 	while (1)
 		pause();
-	return 0;
+	return (0);
 }
