@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbihoues <tbihoues@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tombihoues <tombihoues@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 17:37:26 by tbihoues          #+#    #+#             */
-/*   Updated: 2024/04/09 18:40:14 by tbihoues         ###   ########.fr       */
+/*   Updated: 2024/04/10 03:01:53 by tombihoues       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void init_buffer()
 
 void clear_buffer()
 {
-	for (size_t i = 0; i < bufferIndex; ++i)
+	for (size_t i = 0; i < bufferIndex; ++i) // une boucle while 
 	{
 		buffer[i] = '\0';
 	}
