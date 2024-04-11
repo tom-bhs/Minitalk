@@ -6,7 +6,7 @@
 /*   By: tbihoues <tbihoues@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 17:37:26 by tbihoues          #+#    #+#             */
-/*   Updated: 2024/04/10 23:30:59 by tbihoues         ###   ########.fr       */
+/*   Updated: 2024/04/11 18:40:02 by tbihoues         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 struct s_Buffer	g_buffer;
 
-void	init_buffer(void)
+void	ft_init_buffer(void)
 {
 	g_buffer.data = malloc(BUFFER_SIZE);
 	if (!g_buffer.data)
@@ -25,7 +25,7 @@ void	init_buffer(void)
 	g_buffer.index = 0;
 }
 
-void	clear_buffer(void)
+void	ft_clear_buffer(void)
 {
 	size_t	i;
 
@@ -58,7 +58,7 @@ void	ft_handler(int signum)
 		if (currentchar == '\0')
 		{
 			ft_printf("%s\n", g_buffer);
-			clear_buffer();
+			ft_clear_buffer();
 		}
 		bitsreceived = 0;
 		currentchar = 0;
@@ -69,12 +69,12 @@ int	main(void)
 {
 	struct sigaction	sa;
 
-	init_buffer();
+	ft_init_buffer();
 	sa.sa_handler = ft_handler;
 	sigemptyset(&sa.sa_mask);
 	sigaction(SIGUSR1, &sa, NULL);
 	sigaction(SIGUSR2, &sa, NULL);
-	printf("Server PID: %d\n", getpid());
+	ft_printf("Server PID: %d\n", getpid());
 	while (1)
 		pause();
 	return (0);

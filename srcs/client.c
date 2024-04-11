@@ -6,7 +6,7 @@
 /*   By: tbihoues <tbihoues@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 17:38:11 by tbihoues          #+#    #+#             */
-/*   Updated: 2024/04/10 16:34:34 by tbihoues         ###   ########.fr       */
+/*   Updated: 2024/04/11 19:15:20 by tbihoues         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	send_char(int pid, unsigned char c)
 		{
 			kill(pid, SIGUSR1);
 		}
-		usleep(200);
+		usleep(100);
 		bitindex++;
 	}
 }
@@ -70,13 +70,21 @@ void	send_message(int pid, const char *message)
 int	main(int argc, char *argv[])
 {
 	int	pid;
+	int	i;
 
-	if (argc != 3)
+	i = 0;
+	if (argc == 3)
+	{
+		pid = atoi(argv[1]);
+		if (pid < 0 || !pid)
+			return (1);
+	}
+	else 
 	{
 		ft_printf("Usage: %s <PID> <Message>\n", argv[0]);
 		return (1);
 	}
-	pid = atoi(argv[1]);
+	//pid = atoi(argv[1]);
 	send_message(pid, argv[2]);
 	return (0);
 }
